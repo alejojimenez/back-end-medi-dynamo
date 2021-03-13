@@ -7,14 +7,12 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
-from flask_mysqldb import MySQL
-from datetime import datetime
 from models import User, db
 
 BASEDIR = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://uhbczqfljazmvkl0:X9OXM4a4dCxQTzyPw2ek@bp8jizhsaakrh6qw6udz-mysql.services.clever-cloud.com:3306/bp8jizhsaakrh6qw6udz" + os.path.join(BASEDIR, "medidynamo")
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:X3#stejen@127.0.0.1:3306/medidynamo" + os.path.join(BASEDIR, "medidynamo")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["DEBUG"] = True
 app.config["ENV"] = "development"
