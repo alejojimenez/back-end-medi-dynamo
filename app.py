@@ -56,5 +56,34 @@ def signup():
 
     return jsonify({"success":True})
 
+@app.route('/login', methods=["POST"])
+def login():
+    # contenido del Front
+    if not request.is_json:
+        return jsonify({"msg":"El Contenido esta Vacio"}), 400
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+
+    if not email:
+        return jsonify({"msg":"Falta enviar el Correo"}), 400
+    if not password:
+        return jsonify({"msg":"Falta enviar el Password"}), 400
+    # Consulta tabla user
+    user = User.query.filter_by(email=email).first()
+
+    if user is None:
+        return jsonify({"msg":"Usuario no Registrado"}), 404
+    
+    if bcrypt.check_password_hash(user.password, password):
+        access_token = create_access_token(identity=email)
+        return jsonify({
+            "access_token": access_token,
+            "user": user.serialize(),
+            "success":True
+        }), 200
+    else:
+        return jsonify({"msg": "Password Invalido"}), 400
+
+
 if __name__ == "__main__":
     manager.run()
