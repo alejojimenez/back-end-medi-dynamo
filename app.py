@@ -12,7 +12,8 @@ from models import User, db
 BASEDIR = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:X3#stejen@127.0.0.1:3306/medidynamo" + os.path.join(BASEDIR, "medidynamo")
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:X3#stejen@127.0.0.1:3306/medidynamo" 
+#+ os.path.join(BASEDIR, "medidynamo.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["DEBUG"] = True
 app.config["ENV"] = "development"
@@ -30,9 +31,9 @@ CORS(app)
 @app.route('/signup', methods=["POST"])
 def signup():
     ## Expresion regular para validar email ##
-    email_reg = '^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$'
+    email_reg = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
     ## Expresion regular para validar una contraseña ##
-    password_reg = '^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$'
+    password_reg = '^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$'
     ## Instanciar un nuevo usuario ##
     user = User()
     ## Chequear email que recibe del Front-End
