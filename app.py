@@ -58,22 +58,22 @@ def signup():
 
 @app.route('/login', methods=["POST"])
 def login():
-    # contenido del Front
+    # Validar contenido del Front
     if not request.is_json:
         return jsonify({"msg":"El Contenido esta Vacio"}), 400
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-
+    # Validar datos requeridos
     if not email:
         return jsonify({"msg":"Falta enviar el Correo"}), 400
     if not password:
         return jsonify({"msg":"Falta enviar el Password"}), 400
     # Consulta tabla user
     user = User.query.filter_by(email=email).first()
-
+    # Validar usuario
     if user is None:
         return jsonify({"msg":"Usuario no Registrado"}), 404
-    
+    # Validar password
     if bcrypt.check_password_hash(user.password, password):
         access_token = create_access_token(identity=email)
         return jsonify({
